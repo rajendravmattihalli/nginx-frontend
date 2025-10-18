@@ -1,5 +1,6 @@
-# flaskapi-backend
-flaskapi backend CI - CD integration - job
+# nginx-frontend
+nginx-frontedn web application
+
 
 ## CI Integration
 

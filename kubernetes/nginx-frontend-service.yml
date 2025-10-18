@@ -1,0 +1,21 @@
+# Kubernetes Service Definition Manifest file
+apiVersion: v1
+kind: Service
+metadata:
+   name: nginx-frontend
+   namespace: webapp
+   labels: 
+      app: nginx-frontend
+      tier: tier0
+      type: frontend
+
+spec:
+  selector: 
+      app: nginx-frontend
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30080
+

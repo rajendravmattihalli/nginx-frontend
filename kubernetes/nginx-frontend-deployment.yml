@@ -1,0 +1,40 @@
+# Kubernetes Deployment Definition Manifest file
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-frontend
+  namespace: webapp
+  labels: 
+      app: nginx-frontend
+      tier: tier0
+      type: frontend
+
+spec:
+  replicas: 1
+  selector:
+     matchLabels:
+        app: nginx-frontend
+     
+  template:
+    metadata:
+      labels: 
+        app: nginx-frontend
+        tier: tier0
+        type: frontend
+    spec:
+      containers:
+      - name: nginx-frontend
+        image: nginx-frontend:latest
+        imagePullPolicy: Never  
+        ports:
+          - containerPort: 80
+        resources:
+          requests:
+             cpu: 100m
+             memory: 128Mi
+          limits:
+             cpu: 250m
+             memory: 256Mi
+
+
+
