@@ -88,7 +88,7 @@ Defaulted container "nginx-frontend" out of: nginx-frontend, nginx-prometheus-ex
 2. IAM role - Githubactions
 3. Permission to ECR policy
 4. Change <ACCOUNT_ID> - cibuild-ecr/trust-policy.json
-5. create a GITHUB secret - ACCOUNT_ID 
+5. create a GITHUB secret - AWS_ACCOUNT_ID 
 
 **OIDC provider**
 ```
