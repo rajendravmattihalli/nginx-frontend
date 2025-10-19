@@ -124,7 +124,8 @@ Folder structure
 9. Create - Application - nginx-frontend
 > minikube kubectl -- apply -f argo-cd/application.yaml
 10. Final validate the sync status - under application
-> 
+<img width="1675" height="879" alt="Screenshot 2025-10-19 at 1 46 25 PM" src="https://github.com/user-attachments/assets/dd4feb5f-f1ba-4fa9-bd3f-834244fdb672" />
+
 
 
 
