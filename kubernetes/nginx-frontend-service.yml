@@ -1,4 +1,4 @@
-# Kubernetes Service Definition Manifest file
+# Kubernetes - NGINX-FRONTEND - Service Definition Manifest file
 apiVersion: v1
 kind: Service
 metadata:
@@ -12,10 +12,17 @@ metadata:
 spec:
   selector: 
       app: nginx-frontend
-  type: NodePort
+  type: LoadBalancer
   ports:
-    - protocol: TCP
+    - name: tcp
+      protocol: TCP
       port: 80
       targetPort: 80
       nodePort: 30080
+    
+    - name: metrics
+      protocol: TCP
+      port: 9113
+      targetPort: 9113
+
 
