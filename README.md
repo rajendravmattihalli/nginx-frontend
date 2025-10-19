@@ -68,7 +68,7 @@ Folder structure
 3. Create monitoring namespace
 > kubectl create namespace monitoring
 4. Servicemonitor kubernetes manifest definition for flaskapi-backend application
-> kubectl apply -f flaskapi-backend-servicemonitor.yml
+> kubectl apply -f nginx-frontend-servicemonitor.yml
 <img width="1676" height="364" alt="Screenshot 2025-10-19 at 1 59 33 AM" src="https://github.com/user-attachments/assets/c42179e9-7caa-4b6a-9df8-931b4e5a177e" />
 
 
@@ -92,6 +92,21 @@ Defaulted container "nginx-frontend" out of: nginx-frontend, nginx-prometheus-ex
 {"time_local":"19/Oct/2025:15:34:38 +0800","remote_addr":"127.0.0.1","request":"GET /metrics HTTP/1.1","status":200,"body_bytes_sent":97,"request_time":0.000","http_user_agent":"NGINX-Prometheus-Exporter/v1.5.0"}
 {"time_local":"19/Oct/2025:15:34:38 +0800","remote_addr":"10.244.0.1","request":"GET /health/metrics HTTP/1.1","status":200,"body_bytes_sent":2378,"request_time":0.003","http_user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:144.0) Gecko/20100101 Firefox/144.0"}
 ```
+## Kubernetes Manifest
+Folder Structure
+```
+├── kubernetes
+│   ├── namespace.yml
+│   ├── nginx-frontend-deployment.yml
+│   └── nginx-frontend-service.yml
+```
+**Kubernetes Deployment**
+1. Create namespace if not exists
+> kubectl create -f namespace.yml
+2. Create - Deployment for nginx-frontend -n webapp
+> kubectl create -f nginx-frontend-deployment.yml
+3. Create - Service for nginx-frontend
+> kubectl create -f nginx-frontend-service.yml -n webapp
 
 ## CI Integration
 **Prerequisite**
