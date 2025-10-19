@@ -1,6 +1,54 @@
 # nginx-frontend
-nginx-frontedn web application
+nginx-frontend web application
 
+<ins> **flaskapi-backend application - contents** </ins>
+
+> 1. Multistage Docker build
+> 2. Observability
+> 3. Kubernetes manifest 
+> 4. CI Integration
+> 5. ArgoCD Integartion
+> 6. Sandbox Testing
+
+## Docker Build - Multistage
+
+Folder structure
+```
+├── docker-multistage
+│   ├── Dockerfile
+│   ├── index.html
+│   ├── nginx.conf
+│   └── server.conf
+```
+**Prerequisite**
+> Docker
+
+**Manual Build**
+> docker build -t nginx-frontend:latest 
+
+**Manual deploy**
+> docker run --name nginx-frontend -d -p 80:80 nginx-frontend:latest
+
+# Observability
+**Prometheus Instrumentation**
+<ins> **RED Metrics** </ins>
+1. Request count
+2. Error count
+3. Duration Latency
+
+<ins> **nginx-instrumentation steps** </ins>
+1. nginx server configured to emit metrics for intsturmentation - server.conf
+2. nginx-exporter side car container deployment for scraping nginx instrument metrics
+   
+ScrapeEndpoint = /metrics 
+ScrapeEndpointPort = 80
+
+
+<ins> **Prometheus Operator Installation** </ins>
+**Prerequisite**
+1. Kubernetes
+2. Helm
+3. Kubectl
 
 ## CI Integration
 
