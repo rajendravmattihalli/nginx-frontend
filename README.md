@@ -49,15 +49,26 @@ Folder structure
 
 
 <ins> **Prometheus Operator Installation** </ins>
+
+```
+├── observability
+│   └── nginx-frontend-servicemonitor.yml
+```
+
 **Prerequisite**
 1. Kubernetes
 2. Helm
 3. Kubectl
 
-
-**service-monitor nginx-exporter**
-kubectl apply -f flaskapi-backend-servicemoinitor.yml -n webapp
-
+**Installation**
+1. Add repository for helm charts for prometheus-operator deployment
+> helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+2. Helm repo update
+> helm repo update
+3. Create monitoring namespace
+> kubectl create namespace monitoring
+4. Servicemonitor kubernetes manifest definition for flaskapi-backend application
+> kubectl apply -f flaskapi-backend-servicemonitor.yml
 <img width="1676" height="364" alt="Screenshot 2025-10-19 at 1 59 33 AM" src="https://github.com/user-attachments/assets/c42179e9-7caa-4b6a-9df8-931b4e5a177e" />
 
 
