@@ -52,7 +52,12 @@ Folder structure
 
 ```
 ├── observability
-│   └── nginx-frontend-servicemonitor.yml
+│   ├── fluentd
+│   │   ├── fluentd-configmap.yml
+│   │   ├── fluentd-daemonset.yml
+│   │   └── fluentd-iam-policy.json
+│   └── prometheus
+│       └── nginx-frontend-servicemonitor.yml
 ```
 
 **Prerequisite**
@@ -70,7 +75,6 @@ Folder structure
 4. Servicemonitor kubernetes manifest definition for flaskapi-backend application
 > kubectl apply -f nginx-frontend-servicemonitor.yml
 <img width="1676" height="364" alt="Screenshot 2025-10-19 at 1 59 33 AM" src="https://github.com/user-attachments/assets/c42179e9-7caa-4b6a-9df8-931b4e5a177e" />
-
 
 
 **Logging Instrumentation**
@@ -91,7 +95,31 @@ Defaulted container "nginx-frontend" out of: nginx-frontend, nginx-prometheus-ex
 {"time_local":"19/Oct/2025:15:33:47 +0800","remote_addr":"10.244.0.1","request":"GET /api HTTP/1.1","status":200,"body_bytes_sent":81,"request_time":0.003","http_user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:144.0) Gecko/20100101 Firefox/144.0"}
 {"time_local":"19/Oct/2025:15:34:38 +0800","remote_addr":"127.0.0.1","request":"GET /metrics HTTP/1.1","status":200,"body_bytes_sent":97,"request_time":0.000","http_user_agent":"NGINX-Prometheus-Exporter/v1.5.0"}
 {"time_local":"19/Oct/2025:15:34:38 +0800","remote_addr":"10.244.0.1","request":"GET /health/metrics HTTP/1.1","status":200,"body_bytes_sent":2378,"request_time":0.003","http_user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:144.0) Gecko/20100101 Firefox/144.0"}
+
 ```
+
+**Fluentd Installation**
+1. Create fluentd-iam-policy 
+> aws iam create-policy \
+  --policy-name FluentdCloudWatchPolicy \
+  --policy-document observability/fluentd/fluentd-iam-policy.json
+
+2. Create Service Account 
+> eksctl create iamserviceaccount \
+  --name fluentd \
+  --namespace kube-system \
+  --cluster <YOUR_EKS_CLUSTER_NAME> \
+  --attach-policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/FluentdCloudWatchPolicy \
+  --approve \
+  --override-existing-serviceaccounts
+3. Create fluentd-configmap
+> kubectl apply -f observability/fluentd/fluentd-configmap.yml
+
+4. Create a fluentd-daemonset application
+> kubectl apply -f observability/fluentd/fluentd-daemonset.yml
+
+
+
 ## Kubernetes Manifest
 Folder Structure
 ```
