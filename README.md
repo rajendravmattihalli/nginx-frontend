@@ -1,6 +1,9 @@
 # nginx-frontend
 nginx-frontend web application
 
+<img width="1668" height="277" alt="Screenshot 2025-10-19 at 1 04 31 PM" src="https://github.com/user-attachments/assets/75aab803-1cf6-48b0-bfaa-920175a84929" />
+
+
 <ins> **flaskapi-backend application - contents** </ins>
 
 > 1. Multistage Docker build
@@ -40,8 +43,9 @@ Folder structure
 1. nginx server configured to emit metrics for intsturmentation - server.conf
 2. nginx-exporter side car container deployment for scraping nginx instrument metrics
    
-ScrapeEndpoint = /metrics 
-ScrapeEndpointPort = 80
+> ScrapeEndpoint = /metrics , ScrapeEndpointPort = 80
+
+<img width="1680" height="906" alt="Screenshot 2025-10-19 at 1 04 46 PM" src="https://github.com/user-attachments/assets/6b193ef9-6853-4064-8a71-9a6e90539157" />
 
 
 <ins> **Prometheus Operator Installation** </ins>
@@ -49,6 +53,34 @@ ScrapeEndpointPort = 80
 1. Kubernetes
 2. Helm
 3. Kubectl
+
+
+**service-monitor nginx-exporter**
+kubectl apply -f flaskapi-backend-servicemoinitor.yml -n webapp
+
+<img width="1676" height="364" alt="Screenshot 2025-10-19 at 1 59 33 AM" src="https://github.com/user-attachments/assets/c42179e9-7caa-4b6a-9df8-931b4e5a177e" />
+
+
+
+**Logging Instrumentation**
+1. INFO and ERROR Log
+2. stdout/stderr - container
+3. Json format
+
+```
+nginx-frontend % minikube kubectl -- logs nginx-frontend-78595664b7-bvtk6 -n webapp 
+Defaulted container "nginx-frontend" out of: nginx-frontend, nginx-prometheus-exporter
+{"time_local":"19/Oct/2025:15:33:23 +0800","remote_addr":"10.244.0.1","request":"GET / HTTP/1.1","status":200,"body_bytes_sent":1044,"request_time":0.000","http_user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:144.0) Gecko/20100101 Firefox/144.0"}
+{"time_local":"19/Oct/2025:15:33:23 +0800","remote_addr":"10.244.0.1","request":"GET /api HTTP/1.1","status":200,"body_bytes_sent":81,"request_time":0.020","http_user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:144.0) Gecko/20100101 Firefox/144.0"}
+{"time_local":"19/Oct/2025:15:33:23 +0800","remote_addr":"10.244.0.1","request":"GET /favicon.ico HTTP/1.1","status":404,"body_bytes_sent":153,"request_time":0.000","http_user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:144.0) Gecko/20100101 Firefox/144.0"}
+2025/10/19 15:33:29 [error] 8#8: *1 access forbidden by rule, client: 10.244.0.1, server: localhost, request: "GET /metrics HTTP/1.1", host: "127.0.0.1:49784"
+{"time_local":"19/Oct/2025:15:33:29 +0800","remote_addr":"10.244.0.1","request":"GET /metrics HTTP/1.1","status":403,"body_bytes_sent":153,"request_time":0.000","http_user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:144.0) Gecko/20100101 Firefox/144.0"}
+{"time_local":"19/Oct/2025:15:33:35 +0800","remote_addr":"127.0.0.1","request":"GET /metrics HTTP/1.1","status":200,"body_bytes_sent":97,"request_time":0.000","http_user_agent":"NGINX-Prometheus-Exporter/v1.5.0"}
+{"time_local":"19/Oct/2025:15:33:36 +0800","remote_addr":"10.244.0.1","request":"GET /health/metrics HTTP/1.1","status":200,"body_bytes_sent":2374,"request_time":0.080","http_user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:144.0) Gecko/20100101 Firefox/144.0"}
+{"time_local":"19/Oct/2025:15:33:47 +0800","remote_addr":"10.244.0.1","request":"GET /api HTTP/1.1","status":200,"body_bytes_sent":81,"request_time":0.003","http_user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:144.0) Gecko/20100101 Firefox/144.0"}
+{"time_local":"19/Oct/2025:15:34:38 +0800","remote_addr":"127.0.0.1","request":"GET /metrics HTTP/1.1","status":200,"body_bytes_sent":97,"request_time":0.000","http_user_agent":"NGINX-Prometheus-Exporter/v1.5.0"}
+{"time_local":"19/Oct/2025:15:34:38 +0800","remote_addr":"10.244.0.1","request":"GET /health/metrics HTTP/1.1","status":200,"body_bytes_sent":2378,"request_time":0.003","http_user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:144.0) Gecko/20100101 Firefox/144.0"}
+```
 
 ## CI Integration
 
