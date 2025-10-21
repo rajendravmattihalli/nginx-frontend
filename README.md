@@ -227,5 +227,26 @@ Folder structure
 
 
 
+## Sandbox Testing
+
+Folder Structure
+```
+└── sandbox-testing
+    ├── commands.txt
+    ├── docker-compose.yml
+    ├── flaskapi-backend
+    │   ├── app.py
+    │   ├── Dockerfile
+    │   └── requirements.txt
+    └── nginx-frontend
+        ├── Dockerfile
+        ├── index.html
+        └── server.conf
+```
+
+**Steps to do sandbox testing**
+> cd sandbox-testing
+> docker compose build
+> docker compose run
 
 
